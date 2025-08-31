@@ -61,36 +61,8 @@ CREATE TABLE IF NOT EXISTS `pprod_cortelad` (
   PRIMARY KEY (`id_pprod`),
   KEY `FK_pprod_cortelad_config_terminales` (`id_terminal`),
   KEY `id_usuario` (`id_usuario`),
-  CONSTRAINT `FK_pprod_cortelad_config_terminales` FOREIGN KEY (`id_terminal`) REFERENCES `config_terminales` (`id_terminal`)
+  CONSTRAINT `FK_pprod_cortelad_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='Planillas de producción corte de ladrillos.';
-
--- Volcando estructura para tabla mtdb.bprod_cortelad
-CREATE TABLE IF NOT EXISTS `bprod_cortelad` (
-  `id_bprod` varchar(10) COLLATE utf8mb4_bin NOT NULL COMMENT 'LAx-0000',
-  `id_terminal` int DEFAULT NULL,
-  `fh_creacion` datetime DEFAULT NULL,
-  `fh_modificacion` datetime DEFAULT NULL,
-  `fh_inicio` datetime DEFAULT NULL,
-  `fh_fin` datetime DEFAULT NULL,
-  `duracion` float DEFAULT NULL,
-  `id_pprod` varchar(10) COLLATE utf8mb4_bin DEFAULT '',
-  `material_consumido` varchar(10) COLLATE utf8mb4_bin DEFAULT NULL,
-  `lad10est` int DEFAULT NULL,
-  `lad12est` int DEFAULT NULL,
-  `lad16est` int DEFAULT NULL,
-  `lad10si` int DEFAULT NULL,
-  `lad12si` int DEFAULT NULL,
-  `lad16si` int DEFAULT NULL,
-  `lad10perd` int DEFAULT NULL,
-  `lad12perd` int DEFAULT NULL,
-  `lad16perd` int DEFAULT NULL,
-  `tapa_sobrante` int DEFAULT NULL,
-  `retazos_sobrantes` int DEFAULT NULL,
-  PRIMARY KEY (`id_bprod`),
-  KEY `FK_bprod_cortelad_config_terminales` (`id_terminal`),
-  KEY `id_pprod` (`id_pprod`),
-  CONSTRAINT `FK_bprod_cortelad_config_terminales` FOREIGN KEY (`id_terminal`) REFERENCES `config_terminales` (`id_terminal`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='Batches de producción en corte de ladrillos. 1 batch es igual a 1 bloque o 1 ciclo.';
 
 -- Volcando estructura para tabla mtdb.pprod_embolsado
 CREATE TABLE IF NOT EXISTS `pprod_embolsado` (
@@ -117,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `pprod_embolsado` (
   PRIMARY KEY (`id_pprod`) USING BTREE,
   KEY `FK_pprod_embolsado_config_terminales` (`id_terminal`),
   KEY `id_usuario` (`id_usuario`),
-  CONSTRAINT `FK_pprod_embolsado_config_terminales` FOREIGN KEY (`id_terminal`) REFERENCES `config_terminales` (`id_terminal`)
+  CONSTRAINT `FK_pprod_embolsado_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='Planillas de producción de embolsado de alivianantes.';
 
 -- Volcando estructura para tabla mtdb.pprod_inyeccion
@@ -149,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `pprod_inyeccion` (
   PRIMARY KEY (`id_pprod`) USING BTREE,
   KEY `FK_pprod_inyeccion_config_terminales` (`id_terminal`),
   KEY `id_usuario` (`id_usuario`),
-  CONSTRAINT `FK_pprod_inyeccion_config_terminales` FOREIGN KEY (`id_terminal`) REFERENCES `config_terminales` (`id_terminal`)
+  CONSTRAINT `FK_pprod_inyeccion_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='Planillas de producción de inyección.';
 
 
@@ -168,8 +140,7 @@ CREATE TABLE IF NOT EXISTS `paradas_no_prog` (
   `estado` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id_pnoprog`),
   KEY `id_pprod` (`id_pprod`),
-  KEY `FK_paradas_no_prog_config_terminales` (`id_terminal`),
-  CONSTRAINT `FK_paradas_no_prog_config_terminales` FOREIGN KEY (`id_terminal`) REFERENCES `config_terminales` (`id_terminal`)
+  KEY `FK_paradas_no_prog_config_terminales` (`id_terminal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='Registra todas las paradas NO programadas asociadas a un ID de parte diario.';
 
 -- Volcando estructura para tabla mtdb.paradas_prog
@@ -190,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `paradas_prog` (
   KEY `id_pprod` (`id_pprod`),
   KEY `FK_paradas_prog_config_terminales` (`id_terminal`),
   KEY `id_usuario` (`id_usuario`),
-  CONSTRAINT `FK_paradas_prog_config_terminales` FOREIGN KEY (`id_terminal`) REFERENCES `config_terminales` (`id_terminal`)
+  CONSTRAINT `FK_paradas_prog_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='Registra todas las paradas programadas asociadas a un ID de parte diario.';
 
 -- Volcando estructura para tabla mtdb.partes_de_trabajo
@@ -211,5 +182,5 @@ CREATE TABLE IF NOT EXISTS `partes_de_trabajo` (
   KEY `FK_partes_de_trabajo_config_terminales` (`id_terminal`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_pprod` (`id_pprod`),
-  CONSTRAINT `FK_partes_de_trabajo_config_terminales` FOREIGN KEY (`id_terminal`) REFERENCES `config_terminales` (`id_terminal`)
+  CONSTRAINT `FK_partes_de_trabajo_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='Registra todas las actividades auxiliares o de servicio realizadas dentro de un parte diario.';
